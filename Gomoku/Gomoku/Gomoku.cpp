@@ -57,3 +57,180 @@ void Gomoku::welcome() const
 
 	system("pause");
 }
+bool Gomoku::colWin(char player, int x, int y) 
+{
+    //判斷直向棋子數  
+    int connect = 1;//棋子數(因為初始本身就是一顆棋子,所以為1)
+    for (int i = 1;; i++) {
+        if (map[x + i][y] == player)
+            connect++; //如果Y座標+1(直線向上)是相同的棋子,棋子數+1  
+        else
+            break;//不是相同棋子結束迴圈
+    }
+
+    for (int i = 1;; i++) {
+        if (map[x - i][y] == player)
+            connect++; //如果Y座標-1(直線向下)是相同的棋子,棋子數+1
+        else
+            break;
+    }
+
+    //如果棋子數大於等於5,則獲勝 
+    if (connect >= 5)
+        return true;
+    else
+        return false;
+
+}
+
+bool Gomoku::rowWin(char player, int x, int y) 
+{
+    //判斷橫向棋子數 
+    int connect = 1;
+    for (int i = 1;; i++) {
+        if (map[x][y + i] == player)
+        {
+            connect++; //如果X座標+1(橫線向右)是相同的棋子,棋子數+1
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    for (int i = 1;; i++) {
+        //如果X座標-1(橫線向左)是相同的棋子,棋子數+1 
+        if (map[x][y - i] == player)
+        {
+            connect++;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    if (connect >= 5)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Gomoku::obliWinl(char player, int x, int y)
+{
+    //判斷斜向棋子數
+    int connect = 1;//棋子數(因為初始本身就是一顆棋子,所以為1)
+    for (int i = 1;; i++) {
+        if (map[x + i][y + i] == player)
+        {
+            connect++; //如果Y座標+1 和 X座標+1(斜線向右上)是相同的棋子,棋子數+1  
+        }
+        else
+        {
+            break;//不是相同棋子結束迴圈
+        }
+    }
+
+    for (int i = 1;; i++) {
+        if (map[x - i][y - i] == player)
+        {
+            connect++; //如果Y座標-1 和 X座標-1(斜線向左下)是相同的棋子,棋子數+1
+        }
+        else
+        {
+            break;
+        }
+    }
+    //如果棋子數大於等於5,則獲勝 
+    if (connect >= 5)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Gomoku::obliWin2(char player, int x, int y)
+{
+    //判斷斜向棋子數
+    int connect = 1;//棋子數(因為初始本身就是一顆棋子,所以為1)
+    for (int i = 1;; i++) {
+        if (map[x + i][y - i] == player)
+        {
+            connect++; //如果Y座標+1 和 X座標-1(斜線向左上)是相同的棋子,棋子數+1  
+        }
+        else
+        {
+            break;//不是相同棋子結束迴圈
+        }
+    }
+
+    for (int i = 1;; i++) {
+        if (map[x - i][y + i] == player)
+        {
+            connect++; //如果Y座標-1 和 X座標+1(斜線向右下)是相同的棋子,棋子數+1
+        }
+        else
+        {
+            break;
+        }
+    }
+    //如果棋子數大於等於5,則獲勝 else
+    if (connect >= 5)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Gomoku::winner(char player, int x, int y)
+{
+    //上述四個判斷有一個成立,及獲勝
+    if (colWin(player, x, y) or rowWin(player, x, y) or obliWinl(player, x, y) or obliWin2(player, x, y))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool Gomoku::tfSet(char player, int x, int y)
+{
+    //輸入棋子位置
+    if (x >= 0 && x < 15 && y >= 0 && y < 15 && map[x][y] == ' ') {
+        map[x][y] = player;
+        return true;
+    }
+    else
+    {
+        cout << "無效的輸入, 請重新輸入。" << endl;
+        system("pause");
+        system("CLS");
+        return false;
+    }
+}
+
+bool Gomoku::mapOver()
+{
+    //搜尋是否滿盤,只要有一個是空的,地圖就不為滿
+    for (int i = 0; i < 15; i++)
+    {
+        for (int j = 0; j < 15; j++)
+        {
+            if (map[i][j] == ' ') return false;
+        }
+    }
+
+    return true;
+}
