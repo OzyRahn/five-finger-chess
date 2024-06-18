@@ -4,9 +4,9 @@ using namespace std;
 int main()
 {
     Gomoku game;
-    game.welcome();
-    system("CLS");
-    game.show();
+    game.welcome(); //歡迎介面
+    system("CLS"); //清除螢幕畫面
+    game.show(); 顯示棋盤
     while (1)
 {
     cout << " (Y: 直 X: 橫    X、Y都按0時, 結束遊戲)  " << endl;
